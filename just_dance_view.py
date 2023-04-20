@@ -3,7 +3,35 @@ import cv2
 
 
 class JustDanceView:
-    def draw_connections(self, frame, key_points, edges, confidence_threshold):
+    def __init__(self, model):
+        self.model = model
+        self.score = 0
+
+    def display_song_frame(self):
+        # Display the score and to choose the next song or end game
+        pass
+
+    def display_start_game(self):
+        # Displays initial frame to prompt the user to start the game
+        pass
+
+    def display_end_game(self):
+        # Displays final frame with total score
+        pass
+
+    @staticmethod
+    def display_frame(frame, window_name):
+        cv2.imshow(window_name, frame)
+        cv2.waitKey(10)
+
+    def process_frame(self, frame):
+        img = cv2.resize(frame, (192, 192))
+        img = np.expand_dims(img, axis=0)
+        key_points_with_scores = self.model.run_inference(img)
+        return key_points_with_scores
+
+    @staticmethod
+    def draw_connections(frame, key_points, edges, confidence_threshold):
         y, x, c = frame.shape
         shaped = key_points * [y, x, 1]
         shaped = np.squeeze(shaped)
@@ -19,7 +47,8 @@ class JustDanceView:
                     (0, 0, 255), 2
                 )
 
-    def draw_key_points(self, frame, key_points, confidence_threshold):
+    @staticmethod
+    def draw_key_points(frame, key_points, confidence_threshold):
         y, x, channel = frame.shape
         shaped = key_points * [y, x, 1]
         shaped = np.squeeze(shaped)
@@ -28,10 +57,3 @@ class JustDanceView:
             key_y, key_x, keypoint_conf = key_point
             if keypoint_conf > confidence_threshold:
                 cv2.circle(frame, (int(key_x), int(key_y)), 4, (0, 255, 0), -1)
-
-    def display_frame(self, frame, window_name):
-        cv2.imshow(window_name, frame)
-        cv2.waitKey(10)
-
-    def close_windows(self):
-        cv2.destroyAllWindows()

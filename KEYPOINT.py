@@ -20,7 +20,7 @@ KEYPOINT_DICT = {
 }
 
 # Maps bones to a matplotlib color name.
-KEYPOINT_EDGE_INDS_TO_COLOR = {
+KEYPOINT_EDGE_INDICES_TO_COLOR = {
     (0, 1): "m",
     (0, 2): "c",
     (1, 3): "m",
