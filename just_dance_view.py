@@ -5,7 +5,6 @@ import cv2
 class JustDanceView:
     def __init__(self, model):
         self.model = model
-        self.score = 0
 
     def display_song_frame(self):
         # Display the score and to choose the next song or end game
@@ -23,12 +22,6 @@ class JustDanceView:
     def display_frame(frame, window_name):
         cv2.imshow(window_name, frame)
         cv2.waitKey(10)
-
-    def process_frame(self, frame):
-        img = cv2.resize(frame, (192, 192))
-        img = np.expand_dims(img, axis=0)
-        key_points_with_scores = self.model.run_inference(img)
-        return key_points_with_scores
 
     @staticmethod
     def draw_connections(frame, key_points, edges, confidence_threshold):

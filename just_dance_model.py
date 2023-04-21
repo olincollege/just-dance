@@ -52,15 +52,16 @@ class JustDanceModel:
             angle = 360 - angle
 
         return angle
-    
-    def score_calculator(video,camera,threshold):
+
+    @staticmethod
+    def score_calculator(video, camera, threshold):
         """
         Return a score based on how accurate the user's moves are
         compared to the video
 
         Args:
-            video: A list of angles between two specfic joints
-            camera: A list of angles between two specfic joints
+            video: A list of angles between two specific joints.
+            camera: A list of angles between two specific joints.
             threshold: An integer representing the threshold angle difference
         
         Return:video
