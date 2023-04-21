@@ -11,17 +11,10 @@ class JustDanceGame:
                                               video_path=video_path,
                                               camera_index=camera_index)
 
-    def release_capture(self):
-        self.cap1.release()
-        self.cap2.release()
-
-    def close_windows(self):
-        self.controller.close_windows()
-
     def run(self):
         self.controller.process_frames()
-        self.release_capture()
-        self.close_windows()
+        self.controller.release_capture()
+        self.controller.close_windows()
 
 
 if __name__ == "__main__":

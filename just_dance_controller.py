@@ -78,6 +78,10 @@ class JustDanceController:
         # Method to end the game
         pass
 
+    def release_capture(self):
+        self.cap1.release()
+        self.cap2.release()
+
     @staticmethod
     def close_windows():
         cv2.destroyAllWindows()
