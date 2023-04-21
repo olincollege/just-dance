@@ -10,7 +10,7 @@ class JustDanceGame:
     def __init__(self, model_path, video_path, camera_index):
         self.model = JustDanceModel(model_path=model_path)
         self.view = JustDanceView(model=self.model)
-        self.controller = JustDanceController()
+        self.controller = JustDanceController(model=self.model)
         self.cap1 = cv2.VideoCapture(video_path)
         self.cap2 = cv2.VideoCapture(camera_index)
         self.angle_video = []
@@ -23,9 +23,9 @@ class JustDanceGame:
             ret2, frame2 = self.cap2.read()
 
             key_points_with_scores_video = \
-                self.view.process_frame(frame1)
+                self.controller.process_frame(frame1)
             key_points_with_scores_camera = \
-                self.view.process_frame(frame2)
+                self.controller.process_frame(frame2)
 
             self.view.draw_connections(
                 frame1, key_points_with_scores_video,
