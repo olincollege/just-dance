@@ -53,14 +53,15 @@ class JustDanceModel:
 
         return angle
 
-    def score_calculator(self, threshold):
+    @staticmethod
+    def score_calculator(angle_video, angle_camera, threshold):
         """
         Return a score based on how accurate the user's moves are
         compared to the video
 
         Args:
-            video: A list of angles between two specific joints.
-            camera: A list of angles between two specific joints.
+            angle_video: A list of angles for a joint in the input video.
+            angle_camera: A list of angles for a joint in the user camera video.
             threshold: An integer representing the threshold angle difference
         
         Return:video
@@ -68,8 +69,8 @@ class JustDanceModel:
             between the user's move and the video
         """
         accuracy_count = []
-        video_array = np.array(self.angle_video)
-        camera_array = np.array(self.angle_camera)
+        video_array = np.array(angle_video)
+        camera_array = np.array(angle_camera)
         angle_difference = (abs(video_array - camera_array)).tolist()
         for difference in angle_difference:
             if difference < threshold:
