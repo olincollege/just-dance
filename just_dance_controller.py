@@ -2,6 +2,7 @@ import cv2
 import numpy as np
 from KEYPOINT import KEYPOINT_DICT, KEYPOINT_EDGE_INDICES_TO_COLOR
 import time
+
 from just_dance_view import JustDanceView
 
 
@@ -26,14 +27,14 @@ class JustDanceController:
             ret1, frame1 = self.cap1.read()
             ret2, frame2 = self.cap2.read()
 
-            key_points_with_scores_video = \
-                self.process_frame(frame1)
-            key_points_with_scores_camera = \
-                self.process_frame(frame2)
+            key_points_with_scores_video = self.process_frame(frame1)
+            key_points_with_scores_camera = self.process_frame(frame2)
 
             self.view.draw_connections(
-                frame1, key_points_with_scores_video,
-                KEYPOINT_EDGE_INDICES_TO_COLOR, 0.1
+                frame1,
+                key_points_with_scores_video,
+                KEYPOINT_EDGE_INDICES_TO_COLOR,
+                0.1,
             )
             self.view.draw_key_points(frame1, key_points_with_scores_video, 0.1)
             self.angle_video.append(
@@ -43,8 +44,10 @@ class JustDanceController:
             )
 
             self.view.draw_connections(
-                frame2, key_points_with_scores_camera,
-                KEYPOINT_EDGE_INDICES_TO_COLOR, 0.1
+                frame2,
+                key_points_with_scores_camera,
+                KEYPOINT_EDGE_INDICES_TO_COLOR,
+                0.1,
             )
             self.view.draw_key_points(
                 frame2, key_points_with_scores_camera, 0.1
