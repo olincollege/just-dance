@@ -1,5 +1,7 @@
 import numpy as np
 import cv2
+import tkinter
+from tkinter import messagebox
 
 
 class JustDanceView:
@@ -36,8 +38,10 @@ class JustDanceView:
             if c1 > confidence_threshold and c2 > confidence_threshold:
                 cv2.line(
                     frame,
-                    (int(x1), int(y1)), (int(x2), int(y2)),
-                    (0, 0, 255), 2
+                    (int(x1), int(y1)),
+                    (int(x2), int(y2)),
+                    (0, 0, 255),
+                    2,
                 )
 
     @staticmethod
