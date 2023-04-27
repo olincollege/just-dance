@@ -1,24 +1,10 @@
 import numpy as np
 import cv2
-import tkinter
-from tkinter import messagebox
 
 
 class JustDanceView:
     def __init__(self, model):
         self.model = model
-
-    def display_song_frame(self):
-        # Display the score and to choose the next song or end game
-        pass
-
-    def display_start_game(self):
-        # Displays initial frame to prompt the user to start the game
-        pass
-
-    def display_end_game(self):
-        # Displays final frame with total score
-        pass
 
     @staticmethod
     def display_frame(frame, window_name):
@@ -54,3 +40,4 @@ class JustDanceView:
             key_y, key_x, keypoint_conf = key_point
             if keypoint_conf > confidence_threshold:
                 cv2.circle(frame, (int(key_x), int(key_y)), 4, (0, 255, 0), -1)
+
