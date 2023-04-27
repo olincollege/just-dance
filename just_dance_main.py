@@ -25,6 +25,3 @@ def run_game(song):
         camera_index=0
     )
     game.run(song)
-
-def end_game():
-    quit()

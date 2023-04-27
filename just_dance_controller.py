@@ -58,8 +58,17 @@ class JustDanceController:
                 )
             )
 
-            self.view.display_frame(frame1, "Just Dance")
-            self.view.display_frame(frame2, "You Dance")
+            # Combine the video and camera frames horizontally
+            combined_frame = np.concatenate((frame1, frame2), axis=1)
+
+            # Resize the combined frame to fit the window size
+            combined_frame = cv2.resize(
+                combined_frame, (3840, 1600), interpolation=cv2.INTER_LINEAR
+            )
+
+            # Display the combined frame in a named window
+            cv2.namedWindow("Just Dance", cv2.WINDOW_NORMAL)
+            cv2.imshow("Just Dance", combined_frame)
 
             if cv2.waitKey(10) & 0xFF == 27:
                 # Exit loop if 'q' key is pressed

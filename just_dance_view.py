@@ -40,4 +40,3 @@ class JustDanceView:
             key_y, key_x, keypoint_conf = key_point
             if keypoint_conf > confidence_threshold:
                 cv2.circle(frame, (int(key_x), int(key_y)), 4, (0, 255, 0), -1)
-
