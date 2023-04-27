@@ -14,7 +14,7 @@ class JustDanceGame:
         )
 
     def run(self):
-        playsound("test.mp3", False)
+        playsound("songs/shapeofyou.mp4", False)
         self.controller.process_frames()
         self.controller.release_capture()
         self.controller.close_windows()
@@ -22,7 +22,9 @@ class JustDanceGame:
 
 def run_game():
     game = JustDanceGame(
-        model_path="model.tflite", video_path="test.mp4", camera_index=0
+        model_path="model/model.tflite",
+        video_path="songs/shapeofyou.mp4",
+        camera_index=0
     )
 
     game.run()

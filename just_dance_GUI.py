@@ -1,11 +1,10 @@
-import tkinter as tk  # python 3
-from tkinter import font as tkfont  # python 3
-
+import tkinter as tk
+from tkinter import ttk
+from tkinter import font as tk_font
 from just_dance_main import run_game
 
-
 """
-colour pallette: #2D1E29
+colour palette: #2D1E29
 #272D2B
 #3D5E5E
 #B3A478
@@ -17,7 +16,7 @@ class App(tk.Tk):
     def __init__(self, *args, **kwargs):
         tk.Tk.__init__(self, *args, **kwargs)
 
-        self.title_font = tkfont.Font(
+        self.title_font = tk_font.Font(
             family="Helvetica", size=18, weight="bold"
         )
 
@@ -31,12 +30,12 @@ class App(tk.Tk):
         self.geometry("500x200")
 
         self.frames = {}
-        for F in (StartPage, PageOne, PageTwo):
+        for F in (StartPage, PageOne, EndPage):
             page_name = F.__name__
             frame = F(parent=container, controller=self)
             self.frames[page_name] = frame
 
-            # put all of the pages in the same location;
+            # put all the pages in the same location;
             # the one on the top of the stacking order
             # will be the one that is visible.
             frame.grid(row=0, column=0, sticky="nsew")
@@ -44,7 +43,9 @@ class App(tk.Tk):
         self.show_frame("StartPage")
 
     def show_frame(self, page_name):
-        """Show a frame for the given page name"""
+        """
+        Show a frame for the given page name
+        """
         frame = self.frames[page_name]
         frame.tkraise()
 
@@ -56,18 +57,36 @@ class StartPage(tk.Frame):
         label = tk.Label(self, text="Run Game", font=controller.title_font)
         label.pack(side="top", fill="x", pady=10)
 
-        button1 = tk.Button(
+        self.song_label = tk.Label(
+            self, text="No song selected", font=controller.title_font
+        )
+        self.song_label.pack(side="top", fill="x", pady=10)
+
+        controller.title("Choose a song")
+
+        # song options
+        self.options = ["Shape of you", "Call me maybe", ""]
+
+        # create the dropdown widget
+        self.dropdown_var = tk.StringVar(self)
+        self.dropdown_var.set(self.options[0])
+        self.dropdown_menu = ttk.OptionMenu(self, self.dropdown_var,
+                                            *self.options)
+        self.dropdown_menu.pack()
+
+        start_button = tk.Button(
             self,
             text="Start Game",
             command=lambda: run_game(),
         )
-        button2 = tk.Button(
+        start_button.pack()
+
+        end_button = tk.Button(
             self,
-            text="Go to Page Two",
-            command=lambda: controller.show_frame("PageTwo"),
+            text="End Game",
+            command=lambda: controller.show_frame("EndPage"),
         )
-        button1.pack()
-        button2.pack()
+        end_button.pack()
 
 
 class PageOne(tk.Frame):
@@ -86,12 +105,13 @@ class PageOne(tk.Frame):
         button.pack()
 
 
-class PageTwo(tk.Frame):
+class EndPage(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         self.controller = controller
         label = tk.Label(
-            self, text="This is page 2", font=controller.title_font
+            self, text="You have got great dancing moves!!!",
+            font=controller.title_font
         )
         label.pack(side="top", fill="x", pady=10)
         button = tk.Button(

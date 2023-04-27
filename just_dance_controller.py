@@ -1,6 +1,6 @@
 import cv2
 import numpy as np
-from KEYPOINT import KEYPOINT_DICT, KEYPOINT_EDGE_INDICES_TO_COLOR
+from KEYPOINT import KEYPOINT_EDGE_INDICES_TO_COLOR
 import time
 
 from just_dance_view import JustDanceView
@@ -68,18 +68,6 @@ class JustDanceController:
             if time.time() > self.timeout:
                 print("Timeout reached! Exiting...")
                 break
-
-    def choose_song_frame(self):
-        # Method to choose the song
-        pass
-
-    def start_game(self):
-        # Method to start the game
-        pass
-
-    def end_game(self):
-        # Method to end the game
-        pass
 
     def release_capture(self):
         self.cap1.release()
