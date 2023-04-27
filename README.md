@@ -4,12 +4,13 @@ Sparsh Gupta, Chang Jun Park and Akshat Jain
 
 ## Dependencies
 
-| Package    | Uses             |
-|------------|------------------|
-| NumPy      | Array Operations |
-| OpenCV     | Computer Vision  |
-| Playsound  | Plays sound file |
-| TensorFlow | Machine Learning |
+| Package    | Uses              |
+|------------|-------------------|
+| NumPy      | Array Operations  |
+| OpenCV     | Computer Vision   |
+| Playsound  | Plays sound file  |
+| PyObjC     | Playsound support |
+| TensorFlow | Machine Learning  |
 
 
  The dependencies are present in `requirements.txt` and can be installed using the following in terminal/command prompt (make sure to have your present working directory as this repo):
@@ -25,3 +26,12 @@ All rights belong to the owner.
 No copyright infringement intended.
 
 [1] Shape Of You by Ed Sheeran | Just Dance 2017 | Fanmade by Redoo (https://www.youtube.com/watch?v=zAgUrkk-srI)
+
+[2] Call Me Maybe - Carly Rae Jepsen - Just Dance 4 (https://www.youtube.com/watch?v=wcWntZ1e1ns)
+
+[3] Bruno Mars - Uptown Funk Dance Tutorial (https://www.youtube.com/watch?v=U9Zj1BaH01c)
+
+[4] Muqabla Song Dance Performance (https://www.youtube.com/watch?v=DONDm_5Dx5o)
+
+[5] Don't Start Now by Dua Lipa - Follow Along Dance Tutorial For Beginners (https://www.youtube.com/watch?v=p-CHsUqjnOA)
+

@@ -65,7 +65,11 @@ class StartPage(tk.Frame):
         controller.title("Choose a song")
 
         # song options
-        self.options = ["Shape of you", "Call me maybe", ""]
+        self.options = ["Shape Of You",
+                        "Call Me Maybe",
+                        "Uptown Funk",
+                        "Muqabla (Hindi)",
+                        "Don't Start Now"]
 
         # create the dropdown widget
         self.dropdown_var = tk.StringVar(self)
