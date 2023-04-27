@@ -2,7 +2,7 @@ import cv2
 import numpy as np
 from KEYPOINT import KEYPOINT_EDGE_INDICES_TO_COLOR
 import time
-
+from playsound import playsound
 from just_dance_view import JustDanceView
 
 
@@ -76,3 +76,7 @@ class JustDanceController:
     @staticmethod
     def close_windows():
         cv2.destroyAllWindows()
+
+    @staticmethod
+    def play_sound(song):
+        playsound(song, False)
