@@ -17,11 +17,6 @@ class JustDanceGame:
         self.controller.release_capture()
         self.controller.close_windows()
 
-    def end_game(self):
-        self.controller.release_capture()
-        self.controller.close_windows()
-        quit()
-
 
 def run_game(song):
     game = JustDanceGame(
@@ -31,3 +26,5 @@ def run_game(song):
     )
     game.run(song)
 
+def end_game():
+    quit()

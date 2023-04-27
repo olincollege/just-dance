@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
 from tkinter import font as tk_font
-from just_dance_main import JustDanceGame, run_game
+from just_dance_main import run_game
 
 """
 colour palette: #2D1E29
@@ -30,7 +30,7 @@ class App(tk.Tk):
         self.geometry("500x200")
 
         self.frames = {}
-        for F in (StartPage, PageOne, EndPage):
+        for F in (StartPage, EndPage):
             page_name = F.__name__
             frame = F(parent=container, controller=self)
             self.frames[page_name] = frame
@@ -97,31 +97,10 @@ class StartPage(tk.Frame):
         end_button.pack()
 
 
-class PageOne(tk.Frame):
-    def __init__(self, parent, controller):
-        tk.Frame.__init__(self, parent)
-        self.controller = controller
-        label = tk.Label(
-            self, text="This is page 1", font=controller.title_font
-        )
-        label.pack(side="top", fill="x", pady=10)
-        button = tk.Button(
-            self,
-            text="Go to the start page",
-            command=lambda: controller.show_frame("StartPage"),
-        )
-        button.pack()
-
-
 class EndPage(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         self.controller = controller
-        self.game = JustDanceGame(
-            model_path="model/model.tflite",
-            video_path="songs/shapeofyou.mp4",
-            camera_index=0
-        )
 
         label = tk.Label(
             self, text="You have got great dancing moves!!!",
@@ -137,7 +116,7 @@ class EndPage(tk.Frame):
         end_button = tk.Button(
             self,
             text="Quit Game",
-            command=lambda: self.game.end_game(),
+            command=lambda: quit(),
         )
         end_button.pack()
 
