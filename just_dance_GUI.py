@@ -30,7 +30,7 @@ class App(tk.Tk):
         self.geometry("500x200")
 
         self.frames = {}
-        for F in (StartPage, PageOne, EndPage):
+        for F in (StartPage, EndPage):
             page_name = F.__name__
             frame = F(parent=container, controller=self)
             self.frames[page_name] = frame
@@ -53,35 +53,39 @@ class App(tk.Tk):
 class StartPage(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
+        # song options
+        self.songs = {
+            "Shape of You": "shapeofyou.mp4",
+            "Call Me Maybe": "callmemaybe.mp4",
+            "Uptown Funk": "uptownfunk.mp4",
+            "Muqabla (Hindi)": "muqabla.mp4",
+            "Don't Start Now": "dontstartnow.mp4"
+        }
+        self.selected_song_key = next(iter(self.songs))
+        self.selected_song = self.songs[self.selected_song_key]
         self.controller = controller
+
         label = tk.Label(self, text="Run Game", font=controller.title_font)
         label.pack(side="top", fill="x", pady=10)
 
-        self.song_label = tk.Label(
-            self, text="No song selected", font=controller.title_font
-        )
-        self.song_label.pack(side="top", fill="x", pady=10)
-
         controller.title("Choose a song")
 
-        # song options
-        self.options = ["Shape Of You",
-                        "Call Me Maybe",
-                        "Uptown Funk",
-                        "Muqabla (Hindi)",
-                        "Don't Start Now"]
+        def dropdown_callback(*args):
+            self.selected_song_key = self.dropdown_var.get()
+            self.selected_song = self.songs[self.selected_song_key]
 
         # create the dropdown widget
         self.dropdown_var = tk.StringVar(self)
-        self.dropdown_var.set(self.options[0])
+        self.dropdown_var.set(self.songs[self.selected_song_key])
+        self.dropdown_var.trace("w", dropdown_callback)
         self.dropdown_menu = ttk.OptionMenu(self, self.dropdown_var,
-                                            *self.options)
+                                            *self.songs)
         self.dropdown_menu.pack()
 
         start_button = tk.Button(
             self,
             text="Start Game",
-            command=lambda: run_game(),
+            command=lambda: run_game(song="songs/" + self.selected_song),
         )
         start_button.pack()
 
@@ -93,37 +97,28 @@ class StartPage(tk.Frame):
         end_button.pack()
 
 
-class PageOne(tk.Frame):
-    def __init__(self, parent, controller):
-        tk.Frame.__init__(self, parent)
-        self.controller = controller
-        label = tk.Label(
-            self, text="This is page 1", font=controller.title_font
-        )
-        label.pack(side="top", fill="x", pady=10)
-        button = tk.Button(
-            self,
-            text="Go to the start page",
-            command=lambda: controller.show_frame("StartPage"),
-        )
-        button.pack()
-
-
 class EndPage(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         self.controller = controller
+
         label = tk.Label(
             self, text="You have got great dancing moves!!!",
             font=controller.title_font
         )
         label.pack(side="top", fill="x", pady=10)
-        button = tk.Button(
+        start_button = tk.Button(
             self,
-            text="Go to the start page",
+            text="Go back to the start page",
             command=lambda: controller.show_frame("StartPage"),
         )
-        button.pack()
+        start_button.pack()
+        end_button = tk.Button(
+            self,
+            text="Quit Game",
+            command=lambda: quit(),
+        )
+        end_button.pack()
 
 
 if __name__ == "__main__":
