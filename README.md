@@ -24,13 +24,13 @@ Sparsh Gupta, Chang Jun Park and Akshat Jain
 All rights belong to the owner.
 No copyright infringement intended.
 
-[1] Shape Of You by Ed Sheeran | Just Dance 2017 | Fanmade by Redoo (https://www.youtube.com/watch?v=zAgUrkk-srI)
+[1] [Dance Workout] Sia - Cheap Thrills | MYLEE Cardio Dance Workout, Dance Fitness (https://www.youtube.com/watch?v=_LMpUDvHq1Q)
 
 [2] Call Me Maybe - Carly Rae Jepsen - Just Dance 4 (https://www.youtube.com/watch?v=wcWntZ1e1ns)
 
 [3] Bruno Mars - Uptown Funk Dance Tutorial (https://www.youtube.com/watch?v=U9Zj1BaH01c)
 
-[4] Muqabla Song Dance Performance (https://www.youtube.com/watch?v=DONDm_5Dx5o)
+[4] Dance on: Ghungroo | WAR (https://www.youtube.com/watch?v=v0JKF8S8ehc)
 
 [5] Don't Start Now by Dua Lipa - Follow Along Dance Tutorial For Beginners (https://www.youtube.com/watch?v=p-CHsUqjnOA)
 
