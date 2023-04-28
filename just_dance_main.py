@@ -12,7 +12,7 @@ class JustDanceGame:
         )
 
     def run(self, song):
-        self.controller.play_sound(song)
+        self.controller.play_sound("songs_audio/" + song + ".mp3")
         self.controller.process_frames()
         self.controller.release_capture()
         self.controller.close_windows()
@@ -21,7 +21,7 @@ class JustDanceGame:
 def run_game(song):
     game = JustDanceGame(
         model_path="model/model.tflite",
-        video_path=song,
+        video_path="songs/" + song + ".mp4",
         camera_index=0
     )
     game.run(song)

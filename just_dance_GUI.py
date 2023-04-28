@@ -72,11 +72,11 @@ class StartPage(tk.Frame):
         tk.Frame.__init__(self, parent)
         # song options
         self.songs = {
-            "Shape of You": "shapeofyou.mp4",
-            "Call Me Maybe": "callmemaybe.mp4",
-            "Uptown Funk": "uptownfunk.mp4",
-            "Muqabla (Hindi)": "muqabla.mp4",
-            "Don't Start Now": "dontstartnow.mp4"
+            "Shape of You": "shapeofyou",
+            "Call Me Maybe": "callmemaybe",
+            "Uptown Funk": "uptownfunk",
+            "Muqabla (Hindi)": "muqabla",
+            "Don't Start Now": "dontstartnow"
         }
         self.selected_song_key = next(iter(self.songs))
         self.selected_song = self.songs[self.selected_song_key]
@@ -104,7 +104,8 @@ class StartPage(tk.Frame):
         start_button = tk.Button(
             self,
             text="Start Game",
-            command=lambda: run_game(song="songs/" + self.selected_song),
+            command=lambda:
+            run_game(song=self.selected_song),
         )
         start_button.pack()
 
