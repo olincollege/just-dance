@@ -9,7 +9,6 @@ Sparsh Gupta, Chang Jun Park and Akshat Jain
 | NumPy      | Array Operations  |
 | OpenCV     | Computer Vision   |
 | Playsound  | Plays sound file  |
-| PyObjC     | Playsound support |
 | TensorFlow | Machine Learning  |
 
 
