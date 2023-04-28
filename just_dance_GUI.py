@@ -72,10 +72,10 @@ class StartPage(tk.Frame):
         tk.Frame.__init__(self, parent)
         # song options
         self.songs = {
-            "Shape of You": "shapeofyou",
+            "Cheap Thrills": "cheapthrills",
             "Call Me Maybe": "callmemaybe",
             "Uptown Funk": "uptownfunk",
-            "Muqabla (Hindi)": "muqabla",
+            "Ghungroo (Hindi)": "ghungroo",
             "Don't Start Now": "dontstartnow"
         }
         self.selected_song_key = next(iter(self.songs))
