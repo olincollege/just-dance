@@ -13,6 +13,7 @@ colour palette: #2D1E29
 
 plays = 0
 
+
 class App(tk.Tk):
     def __init__(self, *args, **kwargs):
         tk.Tk.__init__(self, *args, **kwargs)
@@ -86,7 +87,7 @@ class StartPage(tk.Frame):
                          font=controller.title_font)
         label.pack(side="top", fill="x", pady=20)
 
-        controller.title("Just Dance")
+        controller.title("Just Dance - Start Game")
 
         def dropdown_callback(*args):
             self.selected_song_key = self.dropdown_var.get()

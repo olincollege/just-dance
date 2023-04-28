@@ -1,4 +1,3 @@
-import numpy as np
 import cv2
 
 
@@ -9,4 +8,4 @@ class JustDanceView:
     @staticmethod
     def display_frame(frame, window_name):
         cv2.imshow(window_name, frame)
-        #cv2.waitKey(10)
+        cv2.waitKey(10)
