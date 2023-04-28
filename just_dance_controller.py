@@ -1,6 +1,5 @@
 import cv2
 import numpy as np
-from KEYPOINT import KEYPOINT_EDGE_INDICES_TO_COLOR
 import time
 from playsound import playsound
 from just_dance_view import JustDanceView
@@ -44,13 +43,6 @@ class JustDanceController:
                 width2 = int(width2 * scale_factor)
                 height2 = height1
                 frame2 = cv2.resize(frame2, (width2, height2))
-
-            # Resize frame1 to have the same width as frame2
-            if width1 != width2:
-                scale_factor = width1 / width2
-                height1 = int(height1 * scale_factor)
-                width1 = width2
-                frame1 = cv2.resize(frame1, (width1, height1))
 
             # Combine the video and camera frames horizontally
             combined_frame = np.concatenate((frame1, frame2), axis=1)
