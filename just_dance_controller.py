@@ -10,7 +10,6 @@ class JustDanceController:
     def __init__(self, model, video_path, camera_index):
         self.model = model
         self.view = JustDanceView(model=self.model)
-        self.angle_video = []
         self.angle_camera = []
         self.timeout = time.time() + 300
         self.cap1 = cv2.VideoCapture(video_path)
@@ -27,36 +26,31 @@ class JustDanceController:
             ret1, frame1 = self.cap1.read()
             ret2, frame2 = self.cap2.read()
 
-            key_points_with_scores_video = self.process_frame(frame1)
             key_points_with_scores_camera = self.process_frame(frame2)
 
-            self.view.draw_connections(
-                frame1,
-                key_points_with_scores_video,
-                KEYPOINT_EDGE_INDICES_TO_COLOR,
-                0.1,
-            )
-            self.view.draw_key_points(frame1, key_points_with_scores_video, 0.1)
-            self.angle_video.append(
-                self.model.calculate_angle(
-                    frame1, key_points_with_scores_video, 6, 8, 10
-                )
-            )
-
-            self.view.draw_connections(
-                frame2,
-                key_points_with_scores_camera,
-                KEYPOINT_EDGE_INDICES_TO_COLOR,
-                0.1,
-            )
-            self.view.draw_key_points(
-                frame2, key_points_with_scores_camera, 0.1
-            )
             self.angle_camera.append(
                 self.model.calculate_angle(
                     frame2, key_points_with_scores_camera, 6, 8, 10
                 )
             )
+
+            # Get the dimensions of frame1 and frame2
+            height1, width1, _ = frame1.shape
+            height2, width2, _ = frame2.shape
+
+            # Resize frame2 to have the same height as frame1
+            if height1 != height2:
+                scale_factor = height1 / height2
+                width2 = int(width2 * scale_factor)
+                height2 = height1
+                frame2 = cv2.resize(frame2, (width2, height2))
+
+            # Resize frame1 to have the same width as frame2
+            if width1 != width2:
+                scale_factor = width1 / width2
+                height1 = int(height1 * scale_factor)
+                width1 = width2
+                frame1 = cv2.resize(frame1, (width1, height1))
 
             # Combine the video and camera frames horizontally
             combined_frame = np.concatenate((frame1, frame2), axis=1)

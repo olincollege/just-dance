@@ -71,10 +71,13 @@ class JustDanceModel:
         accuracy_count = []
         video_array = np.array(angle_video)
         camera_array = np.array(angle_camera)
+
         angle_difference = (abs(video_array - camera_array)).tolist()
+
         for difference in angle_difference:
             if difference < threshold:
                 accuracy_count.append(1)
+
         score = int((sum(accuracy_count)/len(angle_difference))*100)
 
         return score

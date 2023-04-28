@@ -11,6 +11,8 @@ colour palette: #2D1E29
 #E6DCA6
 """
 
+plays = 0
+
 
 class App(tk.Tk):
     def __init__(self, *args, **kwargs):
@@ -27,9 +29,20 @@ class App(tk.Tk):
         container.pack(side="top", fill="both", expand=True)
         container.grid_rowconfigure(0, weight=1)
         container.grid_columnconfigure(0, weight=1)
-        self.geometry("500x200")
+
+        # Get the screen width and height
+        screen_width = self.winfo_screenwidth()
+        screen_height = self.winfo_screenheight()
+
+        # Calculate the x and y coordinates for the Tkinter window
+        x = (screen_width / 2) - (600 / 2)
+        y = (screen_height / 2) - (300 / 2)
+
+        # Set the position of the window to the center of the screen
+        self.geometry(f"600x300+{int(x)}+{int(y)}")
 
         self.frames = {}
+
         for F in (StartPage, EndPage):
             page_name = F.__name__
             frame = F(parent=container, controller=self)
@@ -40,12 +53,16 @@ class App(tk.Tk):
             # will be the one that is visible.
             frame.grid(row=0, column=0, sticky="nsew")
 
-        self.show_frame("StartPage")
+        if plays == 0:
+            self.show_frame("StartPage", plays)
+        else:
+            self.show_frame("EndPage", plays)
 
-    def show_frame(self, page_name):
+    def show_frame(self, page_name, num_plays):
         """
         Show a frame for the given page name
         """
+        num_plays += 1
         frame = self.frames[page_name]
         frame.tkraise()
 
@@ -64,11 +81,13 @@ class StartPage(tk.Frame):
         self.selected_song_key = next(iter(self.songs))
         self.selected_song = self.songs[self.selected_song_key]
         self.controller = controller
+        self.plays = 0
 
-        label = tk.Label(self, text="Run Game", font=controller.title_font)
-        label.pack(side="top", fill="x", pady=10)
+        label = tk.Label(self, text="Choose a song below!",
+                         font=controller.title_font)
+        label.pack(side="top", fill="x", pady=20)
 
-        controller.title("Choose a song")
+        controller.title("Just Dance - Start Game")
 
         def dropdown_callback(*args):
             self.selected_song_key = self.dropdown_var.get()
@@ -91,8 +110,8 @@ class StartPage(tk.Frame):
 
         end_button = tk.Button(
             self,
-            text="End Game",
-            command=lambda: controller.show_frame("EndPage"),
+            text="Quit Game",
+            command=lambda: quit(),
         )
         end_button.pack()
 
@@ -103,16 +122,19 @@ class EndPage(tk.Frame):
         self.controller = controller
 
         label = tk.Label(
-            self, text="You have got great dancing moves!!!",
+            self, text="You have got great dancing moves!!!"
+                       "You scored {score} points!",
             font=controller.title_font
         )
-        label.pack(side="top", fill="x", pady=10)
+        label.pack(side="top", fill="x", pady=20)
+
         start_button = tk.Button(
             self,
-            text="Go back to the start page",
+            text="Play again!",
             command=lambda: controller.show_frame("StartPage"),
         )
         start_button.pack()
+
         end_button = tk.Button(
             self,
             text="Quit Game",
