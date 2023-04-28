@@ -24,6 +24,7 @@ class JustDanceController:
         while self.cap1.isOpened():
             ret1, frame1 = self.cap1.read()
             ret2, frame2 = self.cap2.read()
+            frame2 = cv2.flip(frame2, 1)
 
             key_points_with_scores_camera = self.process_frame(frame2)
 
