@@ -6,7 +6,7 @@ from just_dance_view import JustDanceView
 
 
 class JustDanceController:
-    def __init__(self, model, video_path, camera_index):
+    def __init__(self, model, video_path, camera_index=0):
         self.model = model
         self.view = JustDanceView(model=self.model)
         self.angle_camera = []
