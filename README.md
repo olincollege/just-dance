@@ -18,6 +18,20 @@ Sparsh Gupta, Chang Jun Park and Akshat Jain
  pip install -r requirements.txt
  ```
 
+
+## Computational Requirements
+
+To have the best performance for this project, your machine must meet the following minimum requirements:
+
+- **RAM:** At least 16GB of RAM is required to ensure smooth performance without lagging of video frames.
+
+- **Camera:** A recommended camera of at least 1080p resolution is recommended, although not required.
+
+- **Processor:** We recommend using a multi-core processor with a clock speed of at least 2GHz to ensure fast computation times.
+
+- **Graphics Card:** A dedicated graphics card with at least 2GB of memory is highly recommended to accelerate rendering and visualization tasks.
+
+
 ## Song Credits
 
 **Disclaimer**: We hereby declare that we do not own the rights to any music/song/video used in this project.
