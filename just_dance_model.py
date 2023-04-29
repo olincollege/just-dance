@@ -27,21 +27,21 @@ class JustDanceModel:
     def calculate_angle(
             frame, key_points, start_index, middle_index, end_index):
         """
-        Calculate the angle between three joints using trigonometry
+        Calculate the angle between three joints using trigonometry.
 
         Args:
             frame: A dictionary of data from a single frame of a video feed
-
-            key_points: A dictionary of coordinates of the user's joint key points
-
-            start_index: An integer representing the index of the user's start joint
-
-            middle_index: An integer representing the index of the user's middle joint
-
-            end_index: An integer representing the index of the user's end joint
+            key_points: A dictionary of coordinates of the user's
+                joint key points
+            start_index: An integer representing the index of the user's
+                start joint
+            middle_index: An integer representing the index of the user's
+                middle joint
+            end_index: An integer representing the index of the user's
+                end joint
         
         Return
-            A float representing the angle between three joints
+            A float representing the angle between three joints.
         """
         y_coordinate, x_coordinate, _ = frame.shape
         shaped = np.squeeze(np.multiply(
@@ -71,29 +71,35 @@ class JustDanceModel:
         return angle
     
     @staticmethod
-    def store_angles(all_joint_angles,frame,keypoints):
+    def store_angles(all_joint_angles, frame, key_points):
         """
         Store all angles between triplets of joints.
         
         Args:
             all_joint_angles: A dictionary representing all the calculated
-            angles between a set of joints
-
-            frame: A dicitonary of data representing a single frame of a video feed
-
-            keypoints: A dictionary of coordinates of the user's joint key points
+                angles between a set of joints
+            frame: A dictionary of data representing a single frame
+                of a video feed
+            key_points: A dictionary of coordinates of the user's
+                joint key points
     
         """
-        all_joint_angles["left_arm"].append(calculate_angle(frame,keypoints,5,7,9))
-        all_joint_angles["right_arm"].append(calculate_angle(frame,keypoints,6,8,10))
-        all_joint_angles["left_elbow"].append(calculate_angle(frame,keypoints,7,5,11))
-        all_joint_angles["right_elbow"].append(calculate_angle(frame,keypoints,8,6,12))
-        all_joint_angles["left_thigh"].append(calculate_angle(frame,keypoints,12,11,13))
-        all_joint_angles["right_thigh"].append(calculate_angle(frame,keypoints,11,12,14))
-        all_joint_angles["left_leg"].append(calculate_angle(frame,keypoints,11,13,15))
-        all_joint_angles["right_leg"].append(calculate_angle(frame,keypoints,12,14,16))
-
-    
+        all_joint_angles["left_arm"].append(
+            JustDanceModel.calculate_angle(frame, key_points, 5, 7, 9))
+        all_joint_angles["right_arm"].append(
+            JustDanceModel.calculate_angle(frame, key_points, 6, 8, 10))
+        all_joint_angles["left_elbow"].append(
+            JustDanceModel.calculate_angle(frame, key_points, 7, 5, 11))
+        all_joint_angles["right_elbow"].append(
+            JustDanceModel.calculate_angle(frame, key_points, 8, 6, 12))
+        all_joint_angles["left_thigh"].append(
+            JustDanceModel.calculate_angle(frame, key_points, 12, 11, 13))
+        all_joint_angles["right_thigh"].append(
+            JustDanceModel.calculate_angle(frame, key_points, 11, 12, 14))
+        all_joint_angles["left_leg"].append(
+            JustDanceModel.calculate_angle(frame, key_points, 11, 13, 15))
+        all_joint_angles["right_leg"].append(
+            JustDanceModel.calculate_angle(frame, key_points, 12, 14, 16))
 
     @staticmethod
     def score_calculator(angle_video, angle_camera, threshold):
@@ -103,9 +109,7 @@ class JustDanceModel:
 
         Args:
             angle_video: A list of angles for a joint in the input video.
-
             angle_camera: A list of angles for a joint in the user camera video.
-
             threshold: An integer representing the threshold angle difference
         
         Return:
@@ -127,25 +131,33 @@ class JustDanceModel:
         return score
 
     @staticmethod
-    def finalscore(all_angles_video,all_angles_camera,threshold):
+    def final_score(all_angles_video, all_angles_camera, threshold):
         """
         Return a final score based on all the calculated scores for angles
 
         Args:
             all_angles_video: A dictionary representing all the calculated
-            angles between a set of joints from a dance video
-
+                angles between a set of joints from a dance video
             all_angles_camera: A dictionary representing all the calculated
-            angles between a set of joints from the user's camera feed
-
+                angles between a set of joints from the user's camera feed
             threshold: An integer representing the score determining up to 
-            how much counts as being the "correct move" for a valid score point
+                how much counts as being the "correct move" for a
+                valid score point
 
 
         """
         all_scores = []
-        joints = ["left_arm","right_arm","left_elbow","right_elbow","left_thigh","right_thigh","left_leg","right_leg"]
+
+        joints = ["left_arm", "right_arm", "left_elbow", "right_elbow",
+                  "left_thigh", "right_thigh", "left_leg", "right_leg"]
+
         for joint in joints:
-            all_scores.append(score_calculator(all_angles_video[joint],all_angles_camera[joint],threshold))
+            all_scores.append(
+                JustDanceModel.score_calculator(
+                    all_angles_video[joint],
+                    all_angles_camera[joint],
+                    threshold))
+
         final_score = np.mean(all_scores)
+
         return final_score
