@@ -9,6 +9,10 @@ class JustDanceController:
     def __init__(self, model, video_path, camera_index=0):
         self.model = model
         self.view = JustDanceView(model=self.model)
+        self.angle_video = {"left_arm": [], "right_arm": [],
+                            "left_elbow": [], "right_elbow": [],
+                            "left_thigh": [], "right_thigh": [],
+                            "left_leg": [], "right_leg": []}
         self.angle_camera = {"left_arm": [], "right_arm": [],
                              "left_elbow": [], "right_elbow": [],
                              "left_thigh": [], "right_thigh": [],
@@ -29,8 +33,11 @@ class JustDanceController:
             ret2, frame2 = self.cap2.read()
             frame2 = cv2.flip(frame2, 1)
 
+            key_points_with_scores_video = self.process_frame(frame1)
             key_points_with_scores_camera = self.process_frame(frame2)
 
+            self.model.store_angles(
+                self.angle_video, frame2, key_points_with_scores_video)
             self.model.store_angles(
                 self.angle_camera, frame2, key_points_with_scores_camera)
 

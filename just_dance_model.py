@@ -1,5 +1,6 @@
 import tensorflow as tf
 import numpy as np
+import csv
 
 
 class JustDanceModel:
@@ -76,7 +77,7 @@ class JustDanceModel:
         Store all angles between triplets of joints.
         
         Args:
-            all_joint_angles: A dictionary representing all the calculated
+            all_joint_angles: A list representing all the calculated
                 angles between a set of joints
             frame: A dictionary of data representing a single frame
                 of a video feed
