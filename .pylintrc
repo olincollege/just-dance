@@ -1,0 +1,6 @@
+[FORMAT]
+max-line-length=80
+[TYPECHECK]
+generated-members =cv2
+[DESIGN]
+min-public-methods=0
