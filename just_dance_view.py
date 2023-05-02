@@ -32,7 +32,6 @@ class JustDanceView:
 
         Args:
             frame (ndarray): The frame to be displayed.
-
             window_name (str): The name of the window to display the frame in
 
         Returns:

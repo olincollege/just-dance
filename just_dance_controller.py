@@ -13,32 +13,21 @@ class JustDanceController:
 
     Attributes:
         model (object): A JustDanceModel object used to run inference on frames
-
         view (object): A JustDanceView object used to visualize the game
-
         angle_video (dict): A dictionary containing the angles of the body
             parts detected in the video frames
-
         angle_camera (dict): A dictionary containing the angles of the body
             parts detected in the camera frames
-
         timeout (float): The time at which the game will time out and exit
-
         cap1 (object): A VideoCapture object for the video file
-
         cap2 (object): A VideoCapture object for the camera
 
     Methods:
         __init__: Initialize a new `JustDanceController` object
-
         process_frame: Process a single frame of the video or camera capture
-
         process_frames: Process the frames from the video and camera capture
-
         release_capture: Release the video and camera captures
-
         close_windows: Close all open windows
-
         play_sound: Play a sound file
     """
 
@@ -48,9 +37,7 @@ class JustDanceController:
 
         Args:
             model: A `JustDanceModel` object used for pose estimation
-
             video_path: A string representing the path to the video file
-
             camera_index: An integer representing the index of the camera
         """
         self.model = model
@@ -78,6 +65,7 @@ class JustDanceController:
         self.timeout = time.time() + 300
         self.cap1 = cv2.VideoCapture(video_path)
         self.cap2 = cv2.VideoCapture(camera_index)
+        self.frame1_rate = self.cap1.get(cv2.CAP_PROP_FPS)
 
     def process_frame(self, frame):
         """
@@ -88,7 +76,7 @@ class JustDanceController:
 
         Returns:
             key_points_with_scores: A `numpy.ndarray` object
-                representing the keypoints with scores
+                representing the key points with scores
         """
         img = cv2.resize(frame, (192, 192))
         img = np.expand_dims(img, axis=0)
@@ -100,6 +88,7 @@ class JustDanceController:
         Process the frames from the video and camera capture
         """
         while self.cap1.isOpened():
+            start_time = time.time()
             _, frame1 = self.cap1.read()
             _, frame2 = self.cap2.read()
             frame2 = cv2.flip(frame2, 1)
@@ -144,6 +133,11 @@ class JustDanceController:
             if time.time() > self.timeout:
                 print("Timeout reached! Exiting...")
                 break
+
+            elapsed_time = time.time() - start_time
+            frame_delay = max(1, int(1000 / self.frame1_rate) - int(
+                elapsed_time * 1000))
+            time.sleep(frame_delay / 1000.0)
 
     def release_capture(self):
         """

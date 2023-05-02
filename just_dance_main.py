@@ -13,9 +13,7 @@ class JustDanceGame:
 
     Attributes:
         model: An object representing the application model
-
         view: An object representing the application display
-
         controller: An object representing the application
             controller using the user input
 
@@ -29,9 +27,7 @@ class JustDanceGame:
 
         Args:
             model_path: An object representing the TensorFlow model path
-
             video_path: An object representing the dance video file path
-
             camera_index: An object representing the camera index for
                 the user input camera feed
         """

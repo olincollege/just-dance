@@ -1,6 +1,7 @@
 """
 Run a GUI for the user to input and call the application
 """
+import sys
 import tkinter as tk
 from tkinter import ttk
 from tkinter import font as tk_font
@@ -22,12 +23,10 @@ class App(tk.Tk):
 
     Attributes:
         title_font (tk_font.Font): The font used for the title label
-
         frames (dict): A dictionary of the frames used in the application
 
     Methods:
         __init__: Initialize the application window
-
         show_frame: Show the specified frame
     """
 
@@ -37,7 +36,6 @@ class App(tk.Tk):
 
         Args:
             *args: Variable length argument list
-
             **kwargs: Arbitrary keyword arguments
         """
         tk.Tk.__init__(self, *args, **kwargs)
@@ -88,7 +86,6 @@ class App(tk.Tk):
 
         Args:
             page_name (str): The name of the page to show
-
             num_plays (int): The number of times the game has been played
         """
         num_plays += 1
@@ -102,14 +99,9 @@ class StartPage(tk.Frame):
 
     Attributes:
         songs (dict): A dictionary of the available songs
-
         selected_song_key (str): The key for the currently selected song
-
         selected_song (str): The value for the currently selected song
-
         controller (App): The application window
-
-        plays (int): The number of times that user had played the game
 
     Methods:
         __init__: Initialize the StartPage class and set up the GUI elements
@@ -135,7 +127,6 @@ class StartPage(tk.Frame):
         self.selected_song_key = next(iter(self.songs))
         self.selected_song = self.songs[self.selected_song_key]
         self.controller = controller
-        self.plays = 0
 
         label = tk.Label(
             self, text="Choose a song below!", font=controller.title_font
@@ -144,7 +135,7 @@ class StartPage(tk.Frame):
 
         controller.title("Just Dance - Start Game")
 
-        def dropdown_callback():
+        def dropdown_callback(*args):  # pylint: disable=unused-argument
             self.selected_song_key = self.dropdown_var.get()
             self.selected_song = self.songs[self.selected_song_key]
 
@@ -160,14 +151,14 @@ class StartPage(tk.Frame):
         start_button = tk.Button(
             self,
             text="Start Game",
-            command=lambda: run_game(song=self.selected_song),
+            command=lambda: run_game(song=self.selected_song)
         )
         start_button.pack()
 
         end_button = tk.Button(
             self,
             text="Quit Game",
-            command=lambda: quit(),
+            command=lambda: sys.exit()
         )
         end_button.pack()
 
@@ -197,23 +188,24 @@ class EndPage(tk.Frame):
         label = tk.Label(
             self,
             text=(
-                "You have got great dancing moves!!!You scored {score} points!"
+                "You have got great dancing moves!!!\n"
+                "You scored {score} points!"
             ),
-            font=controller.title_font,
+            font=controller.title_font
         )
         label.pack(side="top", fill="x", pady=20)
 
         start_button = tk.Button(
             self,
             text="Play again!",
-            command=lambda: controller.show_frame("StartPage"),
+            command=lambda: controller.show_frame("StartPage", PLAYS)
         )
         start_button.pack()
 
         end_button = tk.Button(
             self,
             text="Quit Game",
-            command=lambda: quit(),
+            command=lambda: sys.exit()
         )
         end_button.pack()
 
