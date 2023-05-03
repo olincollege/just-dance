@@ -1,6 +1,7 @@
 """
 Set 'JustDanceController' class for the application
 """
+import sys
 import time
 import numpy as np
 import cv2
@@ -14,9 +15,9 @@ class JustDanceController:
     Attributes:
         model (object): A JustDanceModel object used to run inference on frames
         view (object): A JustDanceView object used to visualize the game
-        angle_video (dict): A dictionary containing the angles of the body
+        angles_video (dict): A dictionary containing the angles of the body
             parts detected in the video frames
-        angle_camera (dict): A dictionary containing the angles of the body
+        angles_camera (dict): A dictionary containing the angles of the body
             parts detected in the camera frames
         timeout (float): The time at which the game will time out and exit
         cap1 (object): A VideoCapture object for the video file
@@ -42,7 +43,7 @@ class JustDanceController:
         """
         self.model = model
         self.view = JustDanceView(model=self.model)
-        self.angle_video = {
+        self.angles_video = {
             "left_arm": [],
             "right_arm": [],
             "left_elbow": [],
@@ -52,7 +53,7 @@ class JustDanceController:
             "left_leg": [],
             "right_leg": [],
         }
-        self.angle_camera = {
+        self.angles_camera = {
             "left_arm": [],
             "right_arm": [],
             "left_elbow": [],
@@ -87,21 +88,26 @@ class JustDanceController:
         """
         Process the frames from the video and camera capture
         """
+        counter = 0
+
         while self.cap1.isOpened():
             start_time = time.time()
             _, frame1 = self.cap1.read()
             _, frame2 = self.cap2.read()
             frame2 = cv2.flip(frame2, 1)
 
-            key_points_with_scores_video = self.process_frame(frame1)
-            key_points_with_scores_camera = self.process_frame(frame2)
+            if counter == 0:
+                key_points_with_scores_video = self.process_frame(frame1)
+                key_points_with_scores_camera = self.process_frame(frame2)
 
-            self.model.store_angles(
-                self.angle_video, frame2, key_points_with_scores_video
-            )
-            self.model.store_angles(
-                self.angle_camera, frame2, key_points_with_scores_camera
-            )
+                self.model.store_angles(
+                    self.angles_video, frame2, key_points_with_scores_video
+                )
+                self.model.store_angles(
+                    self.angles_camera, frame2, key_points_with_scores_camera
+                )
+
+            counter = (counter + 1) % 100
 
             # Get the dimensions of frame1 and frame2
             height1, _, _ = frame1.shape
@@ -126,9 +132,9 @@ class JustDanceController:
             cv2.namedWindow("Just Dance", cv2.WINDOW_NORMAL)
             cv2.imshow("Just Dance", combined_frame)
 
-            if cv2.waitKey(10) & 0xFF == 27:
-                # Exit loop if 'q' key is pressed
-                break
+            if cv2.waitKey(1) & 0xFF == ord("q"):
+                # Exit program if 'q' key is pressed
+                sys.exit()
 
             if time.time() > self.timeout:
                 print("Timeout reached! Exiting...")
