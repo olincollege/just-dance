@@ -109,9 +109,12 @@ class JustDanceController:
 
             counter = (counter + 1) % 100
 
-            # Get the dimensions of frame1 and frame2
-            height1, _, _ = frame1.shape
-            height2, width2, _ = frame2.shape
+            if frame1 is not None and frame2 is not None:
+                # Get the dimensions of frame1 and frame2
+                height1, _, _ = frame1.shape
+                height2, width2, _ = frame2.shape
+            else:
+                break
 
             # Resize frame2 to have the same height as frame1
             if height1 != height2:
