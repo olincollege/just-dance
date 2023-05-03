@@ -37,7 +37,7 @@ class JustDanceGame:
         self.controller = JustDanceController(
             model=self.model, video_path=video_path, camera_index=camera_index
         )
-        self.score=0
+        self.score = 0
 
     def run(self, song):
         """
@@ -59,7 +59,7 @@ class JustDanceGame:
         self.score = self.model.final_score(
             self.controller.angles_video,
             self.controller.angles_camera,
-            30)
+            20)
 
     def store_leaderboard(self, csv_file):
         """
@@ -70,23 +70,9 @@ class JustDanceGame:
 
         Returns:
             None
-
-        Raises:
-            FileNotFoundError: If there is an error reading or writing the CSV file.
         """
-        # Load the existing scores
-        try:
-            with open(csv_file, "r") as file:
-                reader = csv.reader(file)
-                scores = list(reader)
-        except FileNotFoundError:
-            scores = []
-
-        # Add the new score to the list
-        scores.append([self.score])
-
         # Write scores to the file
-        with open(csv_file, "w", newline="") as file:
+        with open(csv_file, "a", newline="") as file:
             writer = csv.writer(file)
             writer.writerow([self.score])
 

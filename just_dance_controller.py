@@ -63,7 +63,6 @@ class JustDanceController:
             "left_leg": [],
             "right_leg": [],
         }
-        self.timeout = time.time() + 300
         self.cap1 = cv2.VideoCapture(video_path)
         self.cap2 = cv2.VideoCapture(camera_index)
         self.frame1_rate = self.cap1.get(cv2.CAP_PROP_FPS)
@@ -138,10 +137,6 @@ class JustDanceController:
             if cv2.waitKey(1) & 0xFF == ord("q"):
                 # Exit program if 'q' key is pressed
                 sys.exit()
-
-            if time.time() > self.timeout:
-                print("Timeout reached! Exiting...")
-                break
 
             elapsed_time = time.time() - start_time
             frame_delay = max(1, int(1000 / self.frame1_rate) - int(

@@ -3,6 +3,8 @@ Run a GUI for the user to input and call the application
 """
 import sys
 import csv
+import time
+from mutagen.mp3 import MP3
 import tkinter as tk
 from tkinter import ttk
 from tkinter import font as tk_font
@@ -14,8 +16,6 @@ from just_dance_main import run_game
 # #3D5E5E
 # #B3A478
 # #E6DCA6
-
-PLAYS = 0
 
 
 def get_leaderboard(filename):
@@ -51,6 +51,8 @@ class App(tk.Tk):
     Methods:
         __init__: Initialize the application window
         show_frame: Show the specified frame
+        start_timer: Starts a timer when the program is run
+        update_timer: Updates the program timer
     """
 
     def __init__(self, *args, **kwargs):
@@ -62,6 +64,8 @@ class App(tk.Tk):
             **kwargs: Arbitrary keyword arguments
         """
         tk.Tk.__init__(self, *args, **kwargs)
+
+        self.start_time = None
 
         self.title_font = tk_font.Font(
             family="Helvetica", size=18, weight="bold"
@@ -98,32 +102,44 @@ class App(tk.Tk):
             # will be the one that is visible.
             frame.grid(row=0, column=0, sticky="nsew")
 
-        if PLAYS == 0:
-            self.show_frame("StartPage", PLAYS)
+        self.show_frame("StartPage")
+        start_page = StartPage(parent=container, controller=self)
+        self.song_length = start_page.get_song_length()
+        self.start_timer()
+
+    def show_frame(self, page_name):
+        """
+        Show a frame for the given page name
+
+        Args:
+            page_name (str): The name of the page to show
+        """
+        frame = self.frames[page_name]
+        frame.tkraise()
+
+    def start_timer(self):
+        """
+        Starts a timer and stores the start time.
+        The timer will be updated by calling the `update_timer` method.
+        """
+        self.start_time = time.time()
+        self.update_timer()
+
+    def update_timer(self):
+        """
+        Updates the timer by calculating the elapsed time since the timer
+        was started.
+
+        If the elapsed time is less than the specified song length,
+        this method will schedule itself to be called again after
+        the song length has elapsed. Otherwise, it will switch to
+        the "EndPage" frame by calling the `show_frame` method.
+        """
+        current_time = time.time() - self.start_time
+        if current_time < self.song_length:
+            self.after(self.song_length, self.update_timer)
         else:
-            self.show_frame("EndPage", PLAYS)
-
-    def show_frame(self, page_name, num_plays):
-        """
-        Show a frame for the given page name
-
-        Args:
-            page_name (str): The name of the page to show
-            num_plays (int): The number of times the game has been played
-        """
-        num_plays += 1
-        frame = self.frames[page_name]
-        frame.tkraise()
-
-    def show_page_frame(self, page_name):
-        """
-        Show a frame for the given page name
-
-        Args:
-            page_name (str): The name of the page to show
-        """
-        frame = self.frames[page_name]
-        frame.tkraise()
+            self.show_frame("EndPage")
 
 
 class StartPage(tk.Frame):
@@ -138,6 +154,7 @@ class StartPage(tk.Frame):
 
     Methods:
         __init__: Initialize the StartPage class and set up the GUI elements
+        get_song_length: Extracts the length of the selected audio.
     """
 
     def __init__(self, parent, controller):
@@ -195,6 +212,16 @@ class StartPage(tk.Frame):
         )
         end_button.pack()
 
+    def get_song_length(self):
+        """
+        Gets the length of the selected song in seconds.
+
+        Returns:
+            The length of the selected song in seconds as an integer.
+        """
+        song_audio = MP3("songs_audio/" + self.selected_song + ".mp3")
+        return int(song_audio.info.length)
+
 
 class EndPage(tk.Frame):
     """
@@ -230,7 +257,7 @@ class EndPage(tk.Frame):
         start_button = tk.Button(
             self,
             text="View your score!",
-            command=lambda: controller.show_page_frame("ScorePage")
+            command=lambda: controller.show_frame("ScorePage")
         )
         start_button.pack()
 
@@ -269,16 +296,9 @@ class ScorePage(tk.Frame):
         leaderboard_button = tk.Button(
             self,
             text="View Leaderboard",
-            command=lambda: controller.show_page_frame("LeaderboardPage")
+            command=lambda: controller.show_frame("LeaderboardPage")
         )
         leaderboard_button.pack()
-
-        start_button = tk.Button(
-            self,
-            text="Play again!",
-            command=lambda: controller.show_frame("StartPage", PLAYS)
-        )
-        start_button.pack()
 
         end_button = tk.Button(
             self,
@@ -312,7 +332,7 @@ class LeaderboardPage(tk.Frame):
         score_button = tk.Button(
             self,
             text="Go back to the Score Page",
-            command=lambda: controller.show_page_frame("ScorePage")
+            command=lambda: controller.show_frame("ScorePage")
         )
         score_button.pack()
 
