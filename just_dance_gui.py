@@ -88,7 +88,7 @@ class App(tk.Tk):
 
         self.frames = {}
 
-        for F in (StartPage, EndPage):
+        for F in (StartPage, EndPage, ScorePage, LeaderboardPage):
             page_name = F.__name__
             frame = F(parent=container, controller=self)
             self.frames[page_name] = frame
@@ -221,7 +221,7 @@ class EndPage(tk.Frame):
         label = tk.Label(
             self,
             text=(
-                "You have got great dancing moves!!!\n"
+                "You have got great dancing moves!!!"
             ),
             font=controller.title_font
         )
@@ -255,7 +255,7 @@ class ScorePage(tk.Frame):
         self.controller = controller
 
         score_data = get_leaderboard("leaderboard.csv")
-        current_score = int(score_data[-1][-1])
+        current_score = int(float(score_data[-1][-1]))
 
         label = tk.Label(
             self,
