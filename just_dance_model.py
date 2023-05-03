@@ -14,16 +14,11 @@ class JustDanceModel:
 
        Methods:
            __init__: Initialize the JustDanceModel class
-
-           run_interface: Process a frame and return keypoints
-
+           run_interface: Process a frame and return key points
            calculate_angles: Calculate angles between specified joints
-
            store_angles: Store all angles between triplets of joints
-
            score_calculator: Calculate a user's score based on
                the accuracy to the video
-
            final_score: Return the final score for the user
 
 
@@ -34,15 +29,13 @@ class JustDanceModel:
         Initialize a new instance of the JustDanceModel class
 
         Sets up the interpreter for the TensorFlow library to
-        interpret our data into keypoints, according to the
+        interpret our data into key points, according to the
         defined machine learning model
 
         Args:
             model_path(object): An object representing
                 the model path to call for the TensorFlow model
                 used in the application
-            interpreter: An object representing the TensorFlow
-                interpreter called from the input model path
         """
         self.model_path = model_path
         self.interpreter = tf.lite.Interpreter(model_path=self.model_path)
@@ -52,7 +45,7 @@ class JustDanceModel:
         """
         Format and run the TensorFlow model on an input image
 
-        Return the joint keypoints with accuracy scores
+        Return the joint key points with accuracy scores
 
         Args:
             input_image: A frame of video or an image, represented
@@ -83,16 +76,12 @@ class JustDanceModel:
 
         Args:
             frame: A dictionary of data from a single frame of a video feed
-
             key_points: A dictionary of coordinates of the user's
                 joint key points
-
             start_index: An integer representing the index of the user's
                 start joint
-
             middle_index: An integer representing the index of the user's
                 middle joint
-
             end_index: An integer representing the index of the user's
                 end joint
 
@@ -134,10 +123,8 @@ class JustDanceModel:
         Args:
             all_joint_angles: A dictionary representing all the calculated
                 angles between a set of joints
-
             frame: A dictionary of data representing a single frame
                 of a video feed
-
             key_points: A dictionary of coordinates of the user's
                 joint key points
 
@@ -175,9 +162,7 @@ class JustDanceModel:
 
         Args:
             angle_video: A list of angles for a joint in the input video
-
             angle_camera: A list of angles for a joint in the user camera video
-
             threshold: An integer representing the threshold angle difference
 
         Return:
@@ -206,10 +191,8 @@ class JustDanceModel:
         Args:
             all_angles_video: A dictionary representing all the calculated
                 angles between a set of joints from a dance video
-
             all_angles_camera: A dictionary representing all the calculated
                 angles between a set of joints from the user's camera feed
-
             threshold: An integer representing the score determining up to
                 how much counts as being the "correct move" for a
                 valid score point

@@ -1,6 +1,7 @@
 """
 Set 'JustDanceGame' class and 'run_game' function to link all classes together
 """
+import csv
 from just_dance_model import JustDanceModel
 from just_dance_view import JustDanceView
 from just_dance_controller import JustDanceController
@@ -13,9 +14,7 @@ class JustDanceGame:
 
     Attributes:
         model: An object representing the application model
-
         view: An object representing the application display
-
         controller: An object representing the application
             controller using the user input
 
@@ -29,9 +28,7 @@ class JustDanceGame:
 
         Args:
             model_path: An object representing the TensorFlow model path
-
             video_path: An object representing the dance video file path
-
             camera_index: An object representing the camera index for
                 the user input camera feed
         """
@@ -40,6 +37,7 @@ class JustDanceGame:
         self.controller = JustDanceController(
             model=self.model, video_path=video_path, camera_index=camera_index
         )
+        self.score=0
 
     def run(self, song):
         """
@@ -54,15 +52,54 @@ class JustDanceGame:
         self.controller.release_capture()
         self.controller.close_windows()
 
+    def calculate_final_score(self):
+        """
+        Calculate the player's final score for the current dance song.
+        """
+        self.score = self.model.final_score(
+            self.controller.angles_video,
+            self.controller.angles_camera,
+            30)
+
+    def store_leaderboard(self, csv_file):
+        """
+        Store the player's score in a leaderboard CSV file.
+
+        Args:
+            csv_file (str): The name of the CSV file to store the leaderboard.
+
+        Returns:
+            None
+
+        Raises:
+            FileNotFoundError: If there is an error reading or writing the CSV file.
+        """
+        # Load the existing scores
+        try:
+            with open(csv_file, "r") as file:
+                reader = csv.reader(file)
+                scores = list(reader)
+        except FileNotFoundError:
+            scores = []
+
+        # Add the new score to the list
+        scores.append([self.score])
+
+        # Write scores to the file
+        with open(csv_file, "w", newline="") as file:
+            writer = csv.writer(file)
+            writer.writerow([self.score])
+
 
 def run_game(song):
     """
     Create an instance of the JustDanceGame class and
-    run the game based on the chosen song
+    run the game based on the chosen song.
+    Calculates and stores the user score in a csv.
 
     Args:
         song: A string representing the chosen song for the user
-            dance to
+            dance to.
     """
     game = JustDanceGame(
         model_path="model/model.tflite",
@@ -70,3 +107,5 @@ def run_game(song):
         camera_index=0,
     )
     game.run(song)
+    game.calculate_final_score()
+    game.store_leaderboard("leaderboard.csv")

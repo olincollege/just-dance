@@ -1,6 +1,8 @@
 """
 Run a GUI for the user to input and call the application
 """
+import sys
+import csv
 import tkinter as tk
 from tkinter import ttk
 from tkinter import font as tk_font
@@ -16,18 +18,38 @@ from just_dance_main import run_game
 PLAYS = 0
 
 
+def get_leaderboard(filename):
+    """
+    Retrieve the leaderboard data from a CSV file.
+
+    Args:
+        filename (str): The name of the CSV file to read
+            the leaderboard data from.
+
+    Returns:
+        A list of lists representing the leaderboard data read from
+         the CSV file. Each sub-list represents a row of the CSV file.
+    """
+    data = []
+
+    with open(filename, 'r') as file:
+        reader = csv.reader(file)
+        for row in reader:
+            data.append(row)
+
+    return data
+
+
 class App(tk.Tk):
     """
     The main application window that inherits from `tk.Tk`
 
     Attributes:
         title_font (tk_font.Font): The font used for the title label
-
         frames (dict): A dictionary of the frames used in the application
 
     Methods:
         __init__: Initialize the application window
-
         show_frame: Show the specified frame
     """
 
@@ -37,7 +59,6 @@ class App(tk.Tk):
 
         Args:
             *args: Variable length argument list
-
             **kwargs: Arbitrary keyword arguments
         """
         tk.Tk.__init__(self, *args, **kwargs)
@@ -88,10 +109,19 @@ class App(tk.Tk):
 
         Args:
             page_name (str): The name of the page to show
-
             num_plays (int): The number of times the game has been played
         """
         num_plays += 1
+        frame = self.frames[page_name]
+        frame.tkraise()
+
+    def show_page_frame(self, page_name):
+        """
+        Show a frame for the given page name
+
+        Args:
+            page_name (str): The name of the page to show
+        """
         frame = self.frames[page_name]
         frame.tkraise()
 
@@ -102,14 +132,9 @@ class StartPage(tk.Frame):
 
     Attributes:
         songs (dict): A dictionary of the available songs
-
         selected_song_key (str): The key for the currently selected song
-
         selected_song (str): The value for the currently selected song
-
         controller (App): The application window
-
-        plays (int): The number of times that user had played the game
 
     Methods:
         __init__: Initialize the StartPage class and set up the GUI elements
@@ -135,7 +160,6 @@ class StartPage(tk.Frame):
         self.selected_song_key = next(iter(self.songs))
         self.selected_song = self.songs[self.selected_song_key]
         self.controller = controller
-        self.plays = 0
 
         label = tk.Label(
             self, text="Choose a song below!", font=controller.title_font
@@ -144,7 +168,7 @@ class StartPage(tk.Frame):
 
         controller.title("Just Dance - Start Game")
 
-        def dropdown_callback():
+        def dropdown_callback(*args):  # pylint: disable=unused-argument
             self.selected_song_key = self.dropdown_var.get()
             self.selected_song = self.songs[self.selected_song_key]
 
@@ -160,14 +184,14 @@ class StartPage(tk.Frame):
         start_button = tk.Button(
             self,
             text="Start Game",
-            command=lambda: run_game(song=self.selected_song),
+            command=lambda: run_game(song=self.selected_song)
         )
         start_button.pack()
 
         end_button = tk.Button(
             self,
             text="Quit Game",
-            command=lambda: quit(),
+            command=lambda: sys.exit()
         )
         end_button.pack()
 
@@ -197,25 +221,100 @@ class EndPage(tk.Frame):
         label = tk.Label(
             self,
             text=(
-                "You have got great dancing moves!!!You scored {score} points!"
+                "You have got great dancing moves!!!\n"
             ),
-            font=controller.title_font,
+            font=controller.title_font
         )
         label.pack(side="top", fill="x", pady=20)
 
         start_button = tk.Button(
             self,
-            text="Play again!",
-            command=lambda: controller.show_frame("StartPage"),
+            text="View your score!",
+            command=lambda: controller.show_page_frame("ScorePage")
         )
         start_button.pack()
 
         end_button = tk.Button(
             self,
             text="Quit Game",
-            command=lambda: quit(),
+            command=lambda: sys.exit()
         )
         end_button.pack()
+
+
+class ScorePage(tk.Frame):
+    def __init__(self, parent, controller):
+        """
+        Initialize the EndPage object and set up the GUI elements.
+
+        Args:
+            parent (tk.Tk): The parent widget
+            controller (App): The application window
+        """
+        tk.Frame.__init__(self, parent)
+        self.controller = controller
+
+        score_data = get_leaderboard("leaderboard.csv")
+        current_score = int(score_data[-1][-1])
+
+        label = tk.Label(
+            self,
+            text=(
+                f"Your score is {current_score}.\n"
+            ),
+            font=controller.title_font
+        )
+        label.pack(side="top", fill="x", pady=20)
+
+        leaderboard_button = tk.Button(
+            self,
+            text="View Leaderboard",
+            command=lambda: controller.show_page_frame("LeaderboardPage")
+        )
+        leaderboard_button.pack()
+
+        start_button = tk.Button(
+            self,
+            text="Play again!",
+            command=lambda: controller.show_frame("StartPage", PLAYS)
+        )
+        start_button.pack()
+
+        end_button = tk.Button(
+            self,
+            text="Quit Game",
+            command=lambda: sys.exit()
+        )
+        end_button.pack()
+
+
+class LeaderboardPage(tk.Frame):
+    def __init__(self, parent, controller):
+        """
+        Initialize the EndPage object and set up the GUI elements.
+
+        Args:
+            parent (tk.Tk): The parent widget
+            controller (App): The application window
+        """
+        tk.Frame.__init__(self, parent)
+        self.controller = controller
+
+        score_data = get_leaderboard("leaderboard.csv")
+
+        label = tk.Label(
+            self,
+            text="Leaderboard",
+            font=controller.title_font
+        )
+        label.pack(side="top", fill="x", pady=20)
+
+        score_button = tk.Button(
+            self,
+            text="Go back to the Score Page",
+            command=lambda: controller.show_page_frame("ScorePage")
+        )
+        score_button.pack()
 
 
 if __name__ == "__main__":
