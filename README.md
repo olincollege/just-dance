@@ -4,12 +4,13 @@ Sparsh Gupta, Chang Jun Park and Akshat Jain
 
 ## Dependencies
 
-| Package    | Uses              |
-|------------|-------------------|
-| NumPy      | Array Operations  |
-| OpenCV     | Computer Vision   |
-| Playsound  | Plays sound file  |
-| TensorFlow | Machine Learning  |
+| Package    | Uses                    |
+|------------|-------------------------|
+| NumPy      | Array Operations        |
+| OpenCV     | Computer Vision         |
+| Playsound  | Plays sound file        |
+| TensorFlow | Machine Learning        |
+| Mutagen    | Audio Length Extraction |
 
 
  The dependencies are present in `requirements.txt` and can be installed using the following in terminal/command prompt (make sure to have your present working directory as this repo):
