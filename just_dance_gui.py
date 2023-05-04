@@ -9,6 +9,7 @@ import tkinter as tk
 from tkinter import ttk
 from tkinter import font as tk_font
 from just_dance_main import run_game
+from just_dance_gui_score import Score
 
 # colour palette:
 # #2D1E29
@@ -92,7 +93,7 @@ class App(tk.Tk):
 
         self.frames = {}
 
-        for F in (StartPage, EndPage, ScorePage, LeaderboardPage):
+        for F in (StartPage, EndPage):
             page_name = F.__name__
             frame = F(parent=container, controller=self)
             self.frames[page_name] = frame
@@ -257,7 +258,7 @@ class EndPage(tk.Frame):
         start_button = tk.Button(
             self,
             text="View your score!",
-            command=lambda: controller.show_frame("ScorePage")
+            command=lambda: Score()
         )
         start_button.pack()
 
@@ -267,74 +268,6 @@ class EndPage(tk.Frame):
             command=lambda: sys.exit()
         )
         end_button.pack()
-
-
-class ScorePage(tk.Frame):
-    def __init__(self, parent, controller):
-        """
-        Initialize the EndPage object and set up the GUI elements.
-
-        Args:
-            parent (tk.Tk): The parent widget
-            controller (App): The application window
-        """
-        tk.Frame.__init__(self, parent)
-        self.controller = controller
-
-        score_data = get_leaderboard("leaderboard.csv")
-        current_score = int(float(score_data[-1][-1]))
-
-        label = tk.Label(
-            self,
-            text=(
-                f"Your score is {current_score}.\n"
-            ),
-            font=controller.title_font
-        )
-        label.pack(side="top", fill="x", pady=20)
-
-        leaderboard_button = tk.Button(
-            self,
-            text="View Leaderboard",
-            command=lambda: controller.show_frame("LeaderboardPage")
-        )
-        leaderboard_button.pack()
-
-        end_button = tk.Button(
-            self,
-            text="Quit Game",
-            command=lambda: sys.exit()
-        )
-        end_button.pack()
-
-
-class LeaderboardPage(tk.Frame):
-    def __init__(self, parent, controller):
-        """
-        Initialize the EndPage object and set up the GUI elements.
-
-        Args:
-            parent (tk.Tk): The parent widget
-            controller (App): The application window
-        """
-        tk.Frame.__init__(self, parent)
-        self.controller = controller
-
-        score_data = get_leaderboard("leaderboard.csv")
-
-        label = tk.Label(
-            self,
-            text="Leaderboard",
-            font=controller.title_font
-        )
-        label.pack(side="top", fill="x", pady=20)
-
-        score_button = tk.Button(
-            self,
-            text="Go back to the Score Page",
-            command=lambda: controller.show_frame("ScorePage")
-        )
-        score_button.pack()
 
 
 if __name__ == "__main__":
