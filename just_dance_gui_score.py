@@ -4,7 +4,7 @@ Run a GUI for the user to display score and leaderboard
 import sys
 import tkinter as tk
 from tkinter import font as tk_font
-from just_dance_score import give_current_score
+from just_dance_score import get_current_score, get_leaderboard_scores
 
 # colour palette:
 # #2D1E29
@@ -88,9 +88,20 @@ class Score(tk.Tk):
 
 
 class ScorePage(tk.Frame):
+    """
+    A class for the score page of the game.
+
+    Attributes:
+        controller (App): The application window
+
+    Methods:
+        __init__(self, parent, controller): Initializes the Score object
+            and sets up the GUI elements.
+    """
+
     def __init__(self, parent, controller):
         """
-        Initialize the EndPage object and set up the GUI elements.
+        Initialize the Score object and set up the GUI elements.
 
         Args:
             parent (tk.Tk): The parent widget
@@ -99,36 +110,47 @@ class ScorePage(tk.Frame):
         tk.Frame.__init__(self, parent)
         self.controller = controller
 
-        current_score = give_current_score("leaderboard.csv")
+        filename = "leaderboard.csv"
+
+        current_score = get_current_score(filename)
 
         label = tk.Label(
             self,
-            text=(
-                f"Your score is {current_score}.\n"
-            ),
-            font=controller.title_font
+            text=f"Your score is {current_score}.\n",
+            font=controller.title_font,
         )
         label.pack(side="top", fill="x", pady=20)
 
         leaderboard_button = tk.Button(
             self,
             text="View Leaderboard",
-            command=lambda: controller.show_frame("LeaderboardPage")
+            command=lambda: controller.show_frame("LeaderboardPage"),
         )
         leaderboard_button.pack()
 
         end_button = tk.Button(
             self,
             text="Quit Game",
-            command=lambda: sys.exit()
+            command=lambda: sys.exit(),  # pylint: disable=unnecessary-lambda
         )
         end_button.pack()
 
 
 class LeaderboardPage(tk.Frame):
+    """
+    A tkinter Frame that displays the top 5 scores from a leaderboard CSV file.
+
+    Attributes:
+        controller (App): The parent tkinter application.
+
+    Methods:
+        __init__(self, parent, controller, filename): Initializes the
+            LeaderboardPage object and sets up the GUI elements.
+    """
+
     def __init__(self, parent, controller):
         """
-        Initialize the EndPage object and set up the GUI elements.
+        Initialize the Leaderboard object and set up the GUI elements.
 
         Args:
             parent (tk.Tk): The parent widget
@@ -137,17 +159,42 @@ class LeaderboardPage(tk.Frame):
         tk.Frame.__init__(self, parent)
         self.controller = controller
 
-        label = tk.Label(
-            self,
-            text="Leaderboard",
-            font=controller.title_font
-        )
+        filename = "leaderboard.csv"
+
+        label = tk.Label(self, text="Leaderboard", font=controller.title_font)
         label.pack(side="top", fill="x", pady=20)
+
+        top_scores = get_leaderboard_scores(filename)
+        num_scores = len(top_scores)
+
+        for i, score in enumerate(top_scores):
+            score_label = tk.Label(
+                self,
+                text=f"{i + 1}: {score}",
+                font=controller.subtitle_font,
+            )
+            score_label.pack(pady=5)
+
+        if num_scores == 0:
+            no_score_label = tk.Label(
+                self,
+                text="No scores to display",
+                font=controller.subtitle_font,
+            )
+            no_score_label.pack(pady=5)
+        elif num_scores < 5:
+            for i in range(num_scores, 5):
+                empty_score_label = tk.Label(
+                    self,
+                    text=f"{i + 1}: -",
+                    font=controller.subtitle_font,
+                )
+                empty_score_label.pack(pady=5)
 
         score_button = tk.Button(
             self,
             text="Go back to the Score Page",
-            command=lambda: controller.show_frame("ScorePage")
+            command=lambda: controller.show_frame("ScorePage"),
         )
         score_button.pack()
 

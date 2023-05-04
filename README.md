@@ -53,7 +53,7 @@ No copyright infringement intended.
 ## Unit Tests
 
 We test the functionality of our code by running pytest test cases. 
-We mainly test whether the score calculated lies between 0-100 and the angles for the video and user's joints lies between 0-180.
+We mainly test whether the score calculated lies between 0-100, the top 5 leaderboard scores obtained are sorted in descending order, and the angles for the video and user's joints lies between 0-180.
 The test files are present in the `test` directory. You can test the code by running the following in terminal/command prompt (make sure to have your present working directory as this repo):
 
 ```

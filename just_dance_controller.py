@@ -138,8 +138,9 @@ class JustDanceController:
                 sys.exit()
 
             elapsed_time = time.time() - start_time
-            frame_delay = max(1, int(1000 / self.frame1_rate) - int(
-                elapsed_time * 1000))
+            frame_delay = max(
+                1, int(1000 / self.frame1_rate) - int(elapsed_time * 1000)
+            )
             time.sleep(frame_delay / 1000.0)
 
     def release_capture(self):
