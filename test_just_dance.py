@@ -42,7 +42,7 @@ def test_get_current_score(leaderboard_data):
     Args:
         leaderboard_data: test leaderboard csv file containing scores.
     """
-    with open("test/test.csv", "w",encoding="utf-8") as file:
+    with open("test/test.csv", "w", encoding="utf-8") as file:
         writer = csv.writer(file)
         writer.writerows(leaderboard_data)
 
@@ -63,7 +63,7 @@ def test_get_leaderboard_scores(leaderboard_data):
     Args:
         leaderboard_data: test leaderboard csv file containing scores.
     """
-    with open("test/test.csv", "w",encoding="utf-8") as file:
+    with open("test/test.csv", "w", encoding="utf-8") as file:
         writer = csv.writer(file)
         writer.writerows(leaderboard_data)
 

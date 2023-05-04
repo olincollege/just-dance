@@ -4,7 +4,7 @@ Set 'JustDanceController' class for the application
 import sys
 import time
 import numpy as np
-from cv2 import cv2
+import cv2
 from playsound import playsound
 from just_dance_view import JustDanceView
 
@@ -62,9 +62,11 @@ class JustDanceController:
             "left_leg": [],
             "right_leg": [],
         }
-        self.cap1 = cv2.VideoCapture(video_path)
-        self.cap2 = cv2.VideoCapture(camera_index)
-        self.frame1_rate = self.cap1.get(cv2.CAP_PROP_FPS)
+        self.cap1 = cv2.VideoCapture(video_path)  # pylint: disable=no-member
+        self.cap2 = cv2.VideoCapture(camera_index)  # pylint: disable=no-member
+        self.frame1_rate = self.cap1.get(
+            cv2.CAP_PROP_FPS
+        )  # pylint: disable=no-member
 
     def process_frame(self, frame):
         """
@@ -77,7 +79,7 @@ class JustDanceController:
             key_points_with_scores: A `numpy.ndarray` object
                 representing the key points with scores
         """
-        img = cv2.resize(frame, (192, 192))
+        img = cv2.resize(frame, (192, 192))  # pylint: disable=no-member
         img = np.expand_dims(img, axis=0)
         key_points_with_scores = self.model.run_inference(img)
         return key_points_with_scores
@@ -92,7 +94,7 @@ class JustDanceController:
             start_time = time.time()
             _, frame1 = self.cap1.read()
             _, frame2 = self.cap2.read()
-            frame2 = cv2.flip(frame2, 1)
+            frame2 = cv2.flip(frame2, 1)  # pylint: disable=no-member
 
             if counter == 0:
                 key_points_with_scores_video = self.process_frame(frame1)
@@ -119,21 +121,29 @@ class JustDanceController:
                 scale_factor = height1 / height2
                 width2 = int(width2 * scale_factor)
                 height2 = height1
-                frame2 = cv2.resize(frame2, (width2, height2))
+                frame2 = cv2.resize(
+                    frame2, (width2, height2)
+                )  # pylint: disable=no-member
 
             # Combine the video and camera frames horizontally
             combined_frame = np.concatenate((frame1, frame2), axis=1)
 
             # Resize the combined frame to fit the window size
-            combined_frame = cv2.resize(
-                combined_frame, (3840, 1600), interpolation=cv2.INTER_LINEAR
+            combined_frame = cv2.resize(  # pylint: disable=no-member
+                combined_frame,
+                (3840, 1600),
+                interpolation=cv2.INTER_LINEAR,  # pylint: disable=no-member
             )
 
             # Display the combined frame in a named window
-            cv2.namedWindow("Just Dance", cv2.WINDOW_NORMAL)
-            cv2.imshow("Just Dance", combined_frame)
+            cv2.namedWindow(
+                "Just Dance", cv2.WINDOW_NORMAL
+            )  # pylint: disable=no-member
+            cv2.imshow(
+                "Just Dance", combined_frame
+            )  # pylint: disable=no-member
 
-            if cv2.waitKey(1) & 0xFF == ord("q"):
+            if cv2.waitKey(1) & 0xFF == ord("q"):  # pylint: disable=no-member
                 # Exit program if 'q' key is pressed
                 sys.exit()
 
@@ -155,7 +165,7 @@ class JustDanceController:
         """
         Close all open windows
         """
-        cv2.destroyAllWindows()
+        cv2.destroyAllWindows()  # pylint: disable=no-member
 
     @staticmethod
     def play_sound(song):
