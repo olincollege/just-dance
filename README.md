@@ -11,6 +11,7 @@ Sparsh Gupta, Chang Jun Park and Akshat Jain
 | Playsound  | Plays sound file        |
 | TensorFlow | Machine Learning        |
 | Mutagen    | Audio Length Extraction |
+| Pytest     | Testing functions       |
 
 
  The dependencies are present in `requirements.txt` and can be installed using the following in terminal/command prompt (make sure to have your present working directory as this repo):
@@ -24,7 +25,7 @@ Sparsh Gupta, Chang Jun Park and Akshat Jain
 
 To have the best performance for this project, your machine must meet the following minimum requirements:
 
-- **RAM:** At least 16GB of RAM is required to ensure smooth performance without lagging of video frames.
+- **RAM:** At least 16GB of RAM is required to ensure smooth performance without lagging of video frames. We recommend using a machine with 32GBS of RAM.
 
 - **Camera:** A recommended camera of at least 1080p resolution is recommended, although not required.
 
@@ -49,3 +50,12 @@ No copyright infringement intended.
 
 [5] Don't Start Now by Dua Lipa - Follow Along Dance Tutorial For Beginners (https://www.youtube.com/watch?v=p-CHsUqjnOA)
 
+## Unit Tests
+
+We test the functionality of our code by running pytest test cases. 
+We mainly test whether the score calculated lies between 0-100 and the angles for the video and user's joints lies between 0-180.
+The test files are present in the `test` directory. You can test the code by running the following in terminal/command prompt (make sure to have your present working directory as this repo):
+
+```
+pytest test_just_dance.py
+```

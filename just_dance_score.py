@@ -24,7 +24,17 @@ def get_leaderboard(filename):
 
 
 def give_current_score(filename):
+    """
+    This function reads the leaderboard data from a file with the
+    given filename and returns the last (current) score in the leaderboard.
+
+    Args:
+        filename (str): The name of the file containing the leaderboard data.
+
+    Returns:
+        int: The last (current) score in the leaderboard.
+        """
     score_data = get_leaderboard(filename)
-    return score_data[-1][-1]
+    return int(score_data[-1][-1])
 
 
