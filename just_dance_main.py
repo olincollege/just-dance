@@ -57,9 +57,8 @@ class JustDanceGame:
         Calculate the player's final score for the current dance song.
         """
         self.score = self.model.final_score(
-            self.controller.angles_video,
-            self.controller.angles_camera,
-            20)
+            self.controller.angles_video, self.controller.angles_camera, 20
+        )
 
     def store_leaderboard(self, csv_file):
         """
@@ -72,7 +71,9 @@ class JustDanceGame:
             None
         """
         # Write scores to the file
-        with open(csv_file, "a", newline="") as file:
+        with open(
+            csv_file, "a", newline=""
+        ) as file:  # pylint: disable=unspecified-encoding, line-too-long
             writer = csv.writer(file)
             writer.writerow([self.score])
 

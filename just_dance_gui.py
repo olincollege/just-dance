@@ -4,10 +4,10 @@ Run a GUI for the user to input and call the application
 import sys
 import csv
 import time
-from mutagen.mp3 import MP3
 import tkinter as tk
 from tkinter import ttk
 from tkinter import font as tk_font
+from mutagen.mp3 import MP3
 from just_dance_main import run_game
 from just_dance_gui_score import Score
 
@@ -33,7 +33,7 @@ def get_leaderboard(filename):
     """
     data = []
 
-    with open(filename, 'r') as file:
+    with open(filename, "r") as file:  # pylint: disable=unspecified-encoding
         reader = csv.reader(file)
         for row in reader:
             data.append(row)
@@ -202,14 +202,14 @@ class StartPage(tk.Frame):
         start_button = tk.Button(
             self,
             text="Start Game",
-            command=lambda: run_game(song=self.selected_song)
+            command=lambda: run_game(song=self.selected_song),
         )
         start_button.pack()
 
         end_button = tk.Button(
             self,
             text="Quit Game",
-            command=lambda: sys.exit()
+            command=lambda: sys.exit(),  # pylint: disable=unnecessary-lambda
         )
         end_button.pack()
 
@@ -248,24 +248,22 @@ class EndPage(tk.Frame):
 
         label = tk.Label(
             self,
-            text=(
-                "You have got great dancing moves!!!"
-            ),
-            font=controller.title_font
+            text="You have got great dancing moves!!!",
+            font=controller.title_font,
         )
         label.pack(side="top", fill="x", pady=20)
 
         start_button = tk.Button(
             self,
             text="View your score!",
-            command=lambda: Score()
+            command=lambda: Score(),  # pylint: disable=unnecessary-lambda
         )
         start_button.pack()
 
         end_button = tk.Button(
             self,
             text="Quit Game",
-            command=lambda: sys.exit()
+            command=lambda: sys.exit(),  # pylint: disable=unnecessary-lambda
         )
         end_button.pack()
 
