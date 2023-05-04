@@ -1,7 +1,7 @@
 """
 Set 'JustDanceView' class for the application
 """
-from cv2 import cv2
+import cv2
 
 
 class JustDanceView:
@@ -37,5 +37,5 @@ class JustDanceView:
         Returns:
             None
         """
-        cv2.imshow(window_name, frame)
-        cv2.waitKey(10)
+        cv2.imshow(window_name, frame)  # pylint: disable=no-member
+        cv2.waitKey(10)  # pylint: disable=no-member

@@ -2,7 +2,6 @@
 Run a GUI for the user to input and call the application
 """
 import sys
-import csv
 import time
 import tkinter as tk
 from tkinter import ttk
@@ -17,28 +16,6 @@ from just_dance_gui_score import Score
 # #3D5E5E
 # #B3A478
 # #E6DCA6
-
-
-def get_leaderboard(filename):
-    """
-    Retrieve the leaderboard data from a CSV file.
-
-    Args:
-        filename (str): The name of the CSV file to read
-            the leaderboard data from.
-
-    Returns:
-        A list of lists representing the leaderboard data read from
-         the CSV file. Each sub-list represents a row of the CSV file.
-    """
-    data = []
-
-    with open(filename, "r") as file:  # pylint: disable=unspecified-encoding
-        reader = csv.reader(file)
-        for row in reader:
-            data.append(row)
-
-    return data
 
 
 class App(tk.Tk):
