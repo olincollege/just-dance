@@ -19,7 +19,6 @@ class JustDanceController:
             parts detected in the video frames
         angles_camera (dict): A dictionary containing the angles of the body
             parts detected in the camera frames
-        timeout (float): The time at which the game will time out and exit
         cap1 (object): A VideoCapture object for the video file
         cap2 (object): A VideoCapture object for the camera
 
