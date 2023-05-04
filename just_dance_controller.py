@@ -4,7 +4,7 @@ Set 'JustDanceController' class for the application
 import sys
 import time
 import numpy as np
-import cv2
+from cv2 import cv2
 from playsound import playsound
 from just_dance_view import JustDanceView
 

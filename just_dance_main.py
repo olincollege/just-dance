@@ -71,9 +71,7 @@ class JustDanceGame:
             None
         """
         # Write scores to the file
-        with open(
-            csv_file, "a", newline=""
-        ) as file:  # pylint: disable=unspecified-encoding, line-too-long
+        with open(csv_file, "a", newline="",encoding="utf-8") as file:
             writer = csv.writer(file)
             writer.writerow([self.score])
 

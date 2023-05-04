@@ -1,3 +1,9 @@
 [tool.black]
 line-length = 80
 preview = true
+
+[tool.pylint.design]
+min-public-methods=1
+
+[tool.pylint.similarities]
+min-similarity-lines=15
