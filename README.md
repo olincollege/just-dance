@@ -4,6 +4,8 @@ Sparsh Gupta, Chang Jun Park and Akshat Jain
 
 ## Project Description
 
+Visit our game's website at https://just-dance.netlify.app
+
 ‘Just Dance’ is a motion-based dance video game. 
 The objective of the game is to follow the on-screen dance moves and score points by mimicking the dance moves with your body. 
 The game uses pose-estimation techniques to detect player’s movements and then uses that to give them a score. 
