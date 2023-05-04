@@ -35,6 +35,6 @@ def give_current_score(filename):
         int: The last (current) score in the leaderboard.
         """
     score_data = get_leaderboard(filename)
-    return int(score_data[-1][-1])
+    return int(float(score_data[-1][-1]))
 
 
