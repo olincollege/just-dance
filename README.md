@@ -38,7 +38,7 @@ To have the best performance for this project, your machine must meet the follow
 
 - **RAM:** At least 16GB of RAM is required to ensure smooth performance without lagging of video frames. We recommend using a machine with 32GB of RAM.
 
-- **Camera:** A recommended camera of at least 1080p resolution is recommended, although not required.
+- **Camera:** A camera of at least 1080p resolution is recommended, although not required.
 
 - **Processor:** We recommend using a multi-core processor with a clock speed of at least 2GHz to ensure fast computation times.
 
