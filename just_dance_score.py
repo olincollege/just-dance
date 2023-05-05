@@ -56,5 +56,5 @@ def get_leaderboard_scores(filename):
     """
     data = get_leaderboard(filename)
     sorted_data = sorted(data[1:], key=lambda row: int(row[0]), reverse=True)
-    top_scores = [int(row[0]) for row in sorted_data]
+    top_scores = [int(float(row[0])) for row in sorted_data]
     return top_scores[:5]
