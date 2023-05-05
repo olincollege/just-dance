@@ -161,7 +161,7 @@ class StartPage(tk.Frame):
         )
         label.pack(side="top", fill="x", pady=20)
 
-        controller.title("Just Dance - Start Game")
+        controller.title("Just Dance - Game")
 
         def dropdown_callback(*args):  # pylint: disable=unused-argument
             self.selected_song_key = self.dropdown_var.get()
@@ -222,6 +222,8 @@ class EndPage(tk.Frame):
         """
         tk.Frame.__init__(self, parent)
         self.controller = controller
+
+        controller.title("Just Dance - Game")
 
         label = tk.Label(
             self,

@@ -108,6 +108,8 @@ class ScorePage(tk.Frame):
         tk.Frame.__init__(self, parent)
         self.controller = controller
 
+        controller.title("Just Dance - Score")
+
         filename = "leaderboard.csv"
 
         current_score = get_current_score(filename)
@@ -156,6 +158,8 @@ class LeaderboardPage(tk.Frame):
         """
         tk.Frame.__init__(self, parent)
         self.controller = controller
+
+        controller.title("Just Dance - Leaderboard")
 
         filename = "leaderboard.csv"
 
