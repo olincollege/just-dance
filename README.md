@@ -4,6 +4,8 @@ Sparsh Gupta, Chang Jun Park and Akshat Jain
 
 ## Project Description
 
+Visit our game's website at https://just-dance.netlify.app
+
 ‘Just Dance’ is a motion-based dance video game. 
 The objective of the game is to follow the on-screen dance moves and score points by mimicking the dance moves with your body. 
 The game uses pose-estimation techniques to detect player’s movements and then uses that to give them a score. 
@@ -36,7 +38,7 @@ To have the best performance for this project, your machine must meet the follow
 
 - **RAM:** At least 16GB of RAM is required to ensure smooth performance without lagging of video frames. We recommend using a machine with 32GB of RAM.
 
-- **Camera:** A recommended camera of at least 1080p resolution is recommended, although not required.
+- **Camera:** A camera of at least 1080p resolution is recommended, although not required.
 
 - **Processor:** We recommend using a multi-core processor with a clock speed of at least 2GHz to ensure fast computation times.
 
