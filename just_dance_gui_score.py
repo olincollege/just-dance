@@ -23,13 +23,13 @@ class Score(tk.Tk):
         frames (dict): A dictionary of the frames used in the application
 
     Methods:
-        __init__: Initialize the application window
+        __init__: Initialize the score window
         show_frame: Show the specified frame
     """
 
     def __init__(self, *args, **kwargs):
         """
-        Initialize the application window
+        Initialize the score window
 
         Args:
             *args: Variable length argument list
@@ -92,7 +92,7 @@ class ScorePage(tk.Frame):
     A class for the score page of the game.
 
     Attributes:
-        controller (App): The application window
+        controller (Score): The score application window
 
     Methods:
         __init__(self, parent, controller): Initializes the Score object
@@ -124,7 +124,7 @@ class ScorePage(tk.Frame):
         leaderboard_button = tk.Button(
             self,
             text="View Leaderboard",
-            command=lambda: controller.show_frame("LeaderboardPage"),
+            command=controller.show_frame("LeaderboardPage"),
         )
         leaderboard_button.pack()
 
@@ -141,7 +141,7 @@ class LeaderboardPage(tk.Frame):
     A tkinter Frame that displays the top 5 scores from a leaderboard CSV file.
 
     Attributes:
-        controller (App): The parent tkinter application.
+        controller (Score): The parent tkinter score application.
 
     Methods:
         __init__(self, parent, controller, filename): Initializes the
@@ -194,7 +194,7 @@ class LeaderboardPage(tk.Frame):
         score_button = tk.Button(
             self,
             text="Go back to the Score Page",
-            command=lambda: controller.show_frame("ScorePage"),
+            command=controller.show_frame("ScorePage"),
         )
         score_button.pack()
 
