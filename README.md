@@ -1,6 +1,6 @@
 # just-dance
 
-Sparsh Gupta, Chang Jun Park and Akshat Jain
+Sparsh Gupta, Chang Jun Park, and Akshat Jain
 
 ## Project Description
 
