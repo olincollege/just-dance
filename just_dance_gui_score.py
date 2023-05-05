@@ -37,8 +37,6 @@ class Score(tk.Tk):
         """
         tk.Tk.__init__(self, *args, **kwargs)
 
-        self.start_time = None
-
         self.title_font = tk_font.Font(
             family="Helvetica", size=18, weight="bold"
         )
@@ -124,7 +122,7 @@ class ScorePage(tk.Frame):
         leaderboard_button = tk.Button(
             self,
             text="View Leaderboard",
-            command=controller.show_frame("LeaderboardPage"),
+            command=lambda: controller.show_frame("LeaderboardPage"),
         )
         leaderboard_button.pack()
 
@@ -171,7 +169,7 @@ class LeaderboardPage(tk.Frame):
             score_label = tk.Label(
                 self,
                 text=f"{i + 1}: {score}",
-                font=controller.subtitle_font,
+                font=controller.title_font,
             )
             score_label.pack(pady=5)
 
@@ -179,7 +177,7 @@ class LeaderboardPage(tk.Frame):
             no_score_label = tk.Label(
                 self,
                 text="No scores to display",
-                font=controller.subtitle_font,
+                font=controller.title_font,
             )
             no_score_label.pack(pady=5)
         elif num_scores < 5:
@@ -187,14 +185,14 @@ class LeaderboardPage(tk.Frame):
                 empty_score_label = tk.Label(
                     self,
                     text=f"{i + 1}: -",
-                    font=controller.subtitle_font,
+                    font=controller.title_font,
                 )
                 empty_score_label.pack(pady=5)
 
         score_button = tk.Button(
             self,
             text="Go back to the Score Page",
-            command=controller.show_frame("ScorePage"),
+            command=lambda: controller.show_frame("ScorePage"),
         )
         score_button.pack()
 
