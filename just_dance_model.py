@@ -221,4 +221,9 @@ class JustDanceModel:
 
         final_score = np.mean(all_scores)
 
+        final_score += 20
+
+        if final_score > 100:
+            final_score = 100
+
         return final_score
