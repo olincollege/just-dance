@@ -55,6 +55,8 @@ def get_leaderboard_scores(filename):
         in the CSV file.
     """
     data = get_leaderboard(filename)
-    sorted_data = sorted(data[1:], key=lambda row: int(row[0]), reverse=True)
+    sorted_data = sorted(
+        data[1:], key=lambda row: int(float(row[0])), reverse=True
+    )
     top_scores = [int(float(row[0])) for row in sorted_data]
     return top_scores[:5]
